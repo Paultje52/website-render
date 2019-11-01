@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head> <!-- This is the header. This will NOT change -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="http://localhost:8080/websiteRender.js"></script> <!-- You need to load in the websiteRender file for the front-end functionality -->
+  </head>
+  <body class="w3-container">
+    <title><%= name %></title> <!-- This is a page title. Normaly you put this in the head, but if you want to change it automaticly, you need to put it in the body. -->
+    <h1><%= name %></h1>
+    <p>Welcome! This is my first Website-Render website!</p>
+    <p>Click on an button below to open that page!</p><br>
+    <!-- For the button functionality you need to use the function "WebsiteRenderButton" and give the page url as the parameter. -->
+    <button class="w3-button w3-green" onclick="WebsiteRenderButton(`/about`)">About</button> 
+    <button class="w3-button w3-orange" onclick="WebsiteRenderButton(`/news`)">News</button>
+  </body>
+</html>

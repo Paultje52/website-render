@@ -1,0 +1,25 @@
+{
+  "name": "website-render",
+  "version": "1.0.0",
+  "description": "Make your website faster for the user with minimal changes!",
+  "main": "src\\index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paultje52/website-render.git"
+  },
+  "author": "Paultje52",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Paultje52/website-render/issues"
+  },
+  "homepage": "https://github.com/Paultje52/website-render#readme",
+  "dependencies": {
+    "ejs": "2.7.1",
+    "express": "4.17.1",
+    "random-string": "0.2.0",
+    "socket.io": "2.3.0"
+  }
+}

@@ -40,6 +40,7 @@ Yes, it's safe. Before the pages are loaded in the background, a call will be ma
 * [Set](#set)
 * [Page](#page)
 * [Start](#start)
+* [Front-end](#front-end)
 
 ## App Constructor
 When you load in Website-Render, you will get a class. You can create your app by constructing.
@@ -108,6 +109,42 @@ You can make a function for the start, or you can use await (if you are in an as
 await app.start();
 console.log(`Online on ${app.port}!`);
 ```
+
+## Front-end
+### **Background code**
+You also need to add one line of code in the head of your front-end html code. You need to put this in every page in the header! This is to load in the front-end code.
+
+```html
+<head>
+  <script src="/websiteRender.js"></script>
+  <!-- Your other stuff -->
+</head>
+```
+By default, the front-end code is located at `/websiteRender.js`, but you can change it with `app.set("frontEndUrl", "URL")`, for example:
+
+Server.js:
+```js
+// Creating app
+app.set("frontEndUrl", "frontEndCode");
+// Other stuff
+```
+All your html pages:
+```html
+<head>
+  <script src="/frontEndCode.js"></script>
+  <!-- Your other stuff -->
+</head>
+```
+### **Buttons**
+For the button functionality, you need to add this to every button `onclick` event that you want to use to redirect to an other page.
+```js
+WebsiteRenderButton(`/PATH`)
+```
+For example, this is a button (with w3css) that redirects to the "about" page.
+```html
+<button class="w3-button w3-green" onclick="WebsiteRenderButton(`/about`)">About</button>
+```
+**And that's it!**
 
 
 # Example

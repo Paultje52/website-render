@@ -1,7 +1,7 @@
 # Website-Render
 Make your website faster for the user with minimal changes!
 
-**Current version:** V1.0.0 [See changes](changes.md#v1.0.0).
+**Current version:** V1.0.2. [See changes](changes.md#v1.0.2).
 
 **Bugs, feature proposal or support:** Click [here](https://github.com/Paultje52/website-render/issues/new/choose).
 

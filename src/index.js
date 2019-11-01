@@ -106,4 +106,4 @@ module.exports = exports = class WebsiteRender {
   }
 }
 
-exports.version = "v1.0.0";
+exports.version = "v1.0.2";

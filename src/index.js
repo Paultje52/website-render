@@ -16,8 +16,13 @@ module.exports = exports = class WebsiteRender {
     let methods = ["enable", "disable", "use", "engine", "checkout", "copy", "delete", "get", "options", "patch", "post", "purge", "put", "search", "trace", "subscribe", "unsubscribe"];
     methods.forEach((method) => {
       this[method] = (path, callback = false) => {
-        if (!["use", "enable", "disable"].includes(method)) this.express[method](path, callback);
-        else this.express[method](path);
+        try {
+          callback.stack[0];
+          this.express[method](path, callback);
+        } catch (e) {
+          if (!["use", "enable", "disable"].includes(method)) this.express[method](path, callback);
+          else this.express[method](path);
+        }
       }
     });
   }
@@ -106,4 +111,4 @@ module.exports = exports = class WebsiteRender {
   }
 }
 
-exports.version = "v1.0.2";
+exports.version = "v1.0.3";

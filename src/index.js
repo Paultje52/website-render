@@ -60,7 +60,7 @@ module.exports = exports = class WebsiteRender {
         this.express.get(i, func);
       }
       this.express.get(`/${this.frontEndUrl}.js`, (_req, res) => {
-        res.sendFile(`${__dirname}/__frontEnd.js`);
+        res.sendFile(`${__dirname}/frontEnd.js`);
       });
 
       this.http = http.createServer(this.express);
@@ -100,10 +100,16 @@ module.exports = exports = class WebsiteRender {
             this.pages[information.path](testData.req, testData.res);
           }); }
           result = await result();
-          if (result.includes("<body>") && result.includes("</body>")) result = result.split("<body>")[1].split("</body>")[0];
+          let title = false;
+          if (result.includes("<title>")) title = result.split("<title>")[1].split("</title>")[0];
+          if ((result.includes("<body>") || result.includes("<body")) && result.includes("</body>")) {
+            result = result.split("<body>")[1] || result.split("<body")[1].split(">").slice(1).join(">");
+            result = result.split("</body>")[0];
+          }
           socket.emit("page", {
             url: information.path,
-            body: result
+            body: result,
+            title: title
           });
         });
       });
@@ -111,4 +117,4 @@ module.exports = exports = class WebsiteRender {
   }
 }
 
-exports.version = "v1.0.3";
+exports.version = "v1.0.4";

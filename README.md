@@ -1,7 +1,7 @@
 # Website-Render
 Make your website faster for the user with minimal changes!
 
-**Current version:** V1.0.3. [See changes](changes.md#v1.0.3).
+**Current version:** V1.0.4. [See changes](changes.md#V1.0.4).
 
 **Bugs, feature proposal or support:** Click [here](https://github.com/Paultje52/website-render/issues/new/choose).
 
@@ -19,7 +19,7 @@ What Website-Render does, is load the pages of your website in the background an
 
 Website-Render users express and ejs.
 
-# How
+# How?
 The back-end code of Website-Render is just like that of an [express](https://expressjs.com) app with [ejs](https://ejs.co/).
 
 When you create your back-end with Website-Render, just use the express syntax (app.get, with req and res, etc). You can use `app.page` for a page that will load on the background.
@@ -144,6 +144,27 @@ For example, this is a button (with w3css) that redirects to the "about" page.
 ```html
 <button class="w3-button w3-green" onclick="WebsiteRenderButton(`/about`)">About</button>
 ```
+### Loading indication
+If you want to show a loading indication until website-render loaded every page, you can do that by setting `window.showLoadingIndication` to `true` before loading the front-end code. Here is an example.
+```html
+<head>
+  <script>
+    window.showLoadingIndication = true;
+  </script>
+  <script src="/websiteRender.js"></script>
+  <!-- Your other stuff -->
+</head>
+```
+
+### Other tags
+Website-Render does some thing with two tags: the title tag and the script tag.
+
+**Title tag:**
+The title tag is the only thing that will be sent from the head. There is nothing else from the head tag that website-render will sent, so save bandwidth.
+**Script tag:**
+Website-render will only use a script tag once per page. This is because otherwise there will be some problems because scripts will be executed multiple times.
+If you have a script that you want to execute each time a user gets a page, use the tag \<FORCESCRIPT> and \</FORCESCRIPT> in stead of \<script> and \</script>.
+
 **And that's it!**
 
 
@@ -194,3 +215,35 @@ _Nothing_
 METHOD can be: checkout, copy, delete, get, options, patch, post, purge, put, search, trace, subscribe and unsubscribe.
 
 Just normal express endpoints. More information [here](https://expressjs.com/en/4x/api.html#app.METHOD).
+
+## Front-end
+### > **When loaded**
+When the front-end code is loaded, it will load "socketio" and "jquery" automaticly.<br>
+When it's loaded in the first page, it will also call the function [loaded](#Function-Loaded).
+
+### > **Function: Loaded**
+This function will connect to the websocket and load all the pages.
+
+### > **Function: Wait**
+This function is meant for internal use. It needs one parameter, the time to wait in MS.<br>
+The only thing it does is promify "setTimeout".
+
+### > **Function: WebsiteRenderButton**
+With tis function you can make your buttons.
+
+**Parameters**
+* Path: The path for the page you want to make visable, for example `/about`. **Required**
+* WaitOnNotFullyRendered: When website-render didn't load all the pages yet, you can choose to let the user wait until all the pages are loaded. When this is true, the user will see a loading icon until website-render is done. **Optional**, default value = true.
+* AddToHistory: If website-render needs to add the old page to the history (So the user can click the back button in the browser). **Optional**, default value = true.
+
+**Returns:**
+_Nothing_.
+
+### > **Function: RemoveScripts**
+This function removes all the \<script> tags with everything within it. It replaces the \<FORCESCRIPT> tags with \<script>.
+
+**Parameters**
+* Html: The html code to change. **Required**
+
+**Returns**<br>
+The changed html code.

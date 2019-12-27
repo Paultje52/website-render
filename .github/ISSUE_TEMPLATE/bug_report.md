@@ -9,7 +9,7 @@ assignees: Paultje52
 
 **Versions**
 [Change these versions if they aren't right]
-* Website-Render: *1.0.0*
+* Website-Render: *1.0.4*
 * EJS: *2.7.1*
 * Express: *4.17.1*
 * Socket.io: *2.3.0*

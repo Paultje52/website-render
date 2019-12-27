@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Version**
-V1.0.0
+V1.0.4
 [This is the most recent version, but if you are using an older version, see your version with `websiteRender.version`]
 
 **I need help with**

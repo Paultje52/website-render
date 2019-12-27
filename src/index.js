@@ -60,7 +60,7 @@ module.exports = exports = class WebsiteRender {
         this.express.get(i, func);
       }
       this.express.get(`/${this.frontEndUrl}.js`, (_req, res) => {
-        res.sendFile(`${__dirname}/frontEnd.js`);
+        res.sendFile(`${__dirname}/__frontEnd.js`);
       });
 
       this.http = http.createServer(this.express);

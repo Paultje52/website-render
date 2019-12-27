@@ -3,6 +3,7 @@ To see what changed each version, look here.
 
 # Menu
 * [V1.0](#v1.0)
+  * [V1.0.5](#V1.0.5)
   * [V1.0.4](#V1.0.4)
   * [V1.0.3](#V1.0.3)
   * [V1.0.2](#V1.0.2)
@@ -10,6 +11,10 @@ To see what changed each version, look here.
   * [V1.0.0](#v1.0.0)
 
 # V1.0
+## V1.0.5
+* Fixed a bug with the loading icon
+* Fixed a bug with the "FORCESCRIPT" tag
+* Some minor changes to the documentation.
 ## V1.0.4
 * Website-render won't throw errors anymore
 * Website-render only loads scripts once for each page, so you won't get errors from that anymore!

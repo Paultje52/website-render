@@ -1,7 +1,7 @@
 # Website-Render
 Make your website faster for the user with minimal changes!
 
-**Current version:** V1.0.4. [See changes](changes.md#V1.0.4).
+**Current version:** V1.0.5. [See changes](changes.md#V1.0.5).
 
 **Bugs, feature proposal or support:** Click [here](https://github.com/Paultje52/website-render/issues/new/choose).
 
@@ -178,6 +178,12 @@ You can find an example [here](/test).
   * [Function: Set](#function-set)
   * [Function: Page](#function-page)
   * [Function: METHOD](#function-method)
+* [Front-end](#front-end-things)
+  * [When loaded](#when-loaded)
+  * [Function: Loaded](#function-loaded)
+  * [Function: Wait](#function-wait)
+  * [Function: WebsiteRenderButton](#function-websiterenderbutton)
+  * [Function: Remove scripts](#function-removescripts)
 ## Class `website-render`
 ### > **Constructor**
 Crates an app for `website-render`.
@@ -216,7 +222,7 @@ METHOD can be: checkout, copy, delete, get, options, patch, post, purge, put, se
 
 Just normal express endpoints. More information [here](https://expressjs.com/en/4x/api.html#app.METHOD).
 
-## Front-end
+## Front-end Things
 ### > **When loaded**
 When the front-end code is loaded, it will load "socketio" and "jquery" automaticly.<br>
 When it's loaded in the first page, it will also call the function [loaded](#Function-Loaded).

@@ -21,7 +21,7 @@ if (window.pages === undefined) {
     loadingElement.id = "websiteRenderLoadingIcon";
     setTimeout(() => {
       document.getElementsByTagName("body")[0].appendChild(loadingElement);
-    }, 10);
+    }, 100);
     loading = true;
   }
   // Presetting
@@ -136,7 +136,7 @@ if (window.pages === undefined) {
       if (level <= 0) output += s;
     }
     handle(html);
-    output = output.split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</FORCESCRIPT>");
+    output = output.split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</script>");
     return output;
   }
 

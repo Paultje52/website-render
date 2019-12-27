@@ -35,7 +35,7 @@ module.exports = exports = class WebsiteRender {
     this.pages[path] = callback;
   }
 
-  async start(func = () => {}) {
+  async start(func = () => { }) {
     return new Promise((res) => {
       this.tests = {};
       this.express.get(`/${this.testurl}`, (req, res, next) => {
@@ -54,13 +54,20 @@ module.exports = exports = class WebsiteRender {
             if (!result) return;
           }
           req.direct = false;
-          res.doNotLoad = () => {res.json({status: 406, loadInBackground: false})};
+          res.doNotLoad = () => { res.json({ status: 406, loadInBackground: false }) };
+          res.render = (file, information = {}) => {
+            file = `${process.cwd()}/views/${file}`;
+            file = fs.readFileSync(file).toString("utf8");
+            file = ejs.render(file, information);
+            file = file.split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</script>");
+            res.send(file);
+          }
           this.pages[i](req, res, next);
         }
         this.express.get(i, func);
       }
       this.express.get(`/${this.frontEndUrl}.js`, (_req, res) => {
-        res.sendFile(`${__dirname}/frontEnd.js`);
+        res.sendFile(`${__dirname}/__frontEnd.js`);
       });
 
       this.http = http.createServer(this.express);
@@ -87,18 +94,20 @@ module.exports = exports = class WebsiteRender {
         socket.on("page", async (information) => {
           if (!this.tests[information.id]) return;
           let testData = this.tests[information.id];
-          let result = () => { return new Promise((_mkwe_24jfds_resolve) => {
-            testData.res.send = (data) => {
-              _mkwe_24jfds_resolve(data);
-            }
-            testData.res.render = (file, information = {}) => {
-              file = `${process.cwd()}/views/${file}`;
-              file = fs.readFileSync(file).toString("utf8");
-              file = ejs.render(file, information);
-              _mkwe_24jfds_resolve(file);
-            }
-            this.pages[information.path](testData.req, testData.res);
-          }); }
+          let result = () => {
+            return new Promise((_mkwe_24jfds_resolve) => {
+              testData.res.send = (data) => {
+                _mkwe_24jfds_resolve(data);
+              }
+              testData.res.render = (file, information = {}) => {
+                file = `${process.cwd()}/views/${file}`;
+                file = fs.readFileSync(file).toString("utf8");
+                file = ejs.render(file, information);
+                _mkwe_24jfds_resolve(file);
+              }
+              this.pages[information.path](testData.req, testData.res);
+            });
+          }
           result = await result();
           let title = false;
           if (result.includes("<title>")) title = result.split("<title>")[1].split("</title>")[0];
@@ -117,4 +126,4 @@ module.exports = exports = class WebsiteRender {
   }
 }
 
-exports.version = "v1.0.4";
+exports.version = "v1.0.5";

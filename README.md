@@ -1,7 +1,10 @@
 # Website-Render
 Make your website faster for the user with minimal changes!
 
-**Current version:** V1.0.5. [See changes](changes.md#V1.0.5).
+**Current version:** V1.0.6. The changes are listed here.
+* Fixed support for safari (And other webbrowsers on ios devices)
+* Fixed a bug with the "FORCESCRIPT" tag
+* Made the loading of webpages a bit faster, every nano second counts!
 
 **Bugs, feature proposal or support:** Click [here](https://github.com/Paultje52/website-render/issues/new/choose).
 

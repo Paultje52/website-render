@@ -1,20 +1,39 @@
-// Importing socket.io
-if (typeof socketio === "undefined") {
-  let socketio = document.createElement("script");
-  socketio.src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js";
-  document.getElementsByTagName("head")[0].appendChild(socketio);
-}
-// Importing jquery
-if (typeof jquery === "undefined") {
-  let jquery = document.createElement("script");
-  jquery.src = "https://code.jquery.com/jquery-3.4.1.min.js";
-  document.getElementsByTagName("head")[0].appendChild(jquery);
-}
-
 // Where the magic happens
 if (window.pages === undefined) {
+  // Importing socket.io
+  if (typeof socketio === "undefined") {
+    let socketio = document.createElement("script");
+    socketio.src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js";
+    document.getElementsByTagName("head")[0].appendChild(socketio);
+  }
+  // Importing jquery
+  if (typeof jquery === "undefined") {
+    let jquery = document.createElement("script");
+    jquery.src = "https://code.jquery.com/jquery-3.4.1.min.js";
+    document.getElementsByTagName("head")[0].appendChild(jquery);
+  }
+
+  // Checking if the document is ready (Checking if you can use socket.io and jquery)
+  function dockReady(fn) {
+    let i = setInterval(() => {
+      try {
+        $(document).ready(() => { });
+        io.Manager;
+        clearInterval(i);
+        fn();
+      } catch (e) { }
+    });
+  }
+
+  // When the document is ready
+  dockReady(() => {
+    loaded();
+    $("body").empty();
+    WebsiteRenderButton(`/${window.location.path || ""}`, true, false, false);
+  });
+
   // Show the loading icon until website-render loaded everything.
-  let loading = false;
+  window.loading = false;
   if (window.showLoadingIndication) {
     let loadingElement = document.createElement("div");
     loadingElement.style = `display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100vw;height: 100vh;background-color: rgba(192, 192, 192, 0.5);background-image: url("https://i.stack.imgur.com/MnyxU.gif");background-repeat: no-repeat;background-position: center;`;
@@ -22,13 +41,12 @@ if (window.pages === undefined) {
     setTimeout(() => {
       document.getElementsByTagName("body")[0].appendChild(loadingElement);
     }, 100);
-    loading = true;
+    window.loading = true;
   }
   // Presetting
   window.pages = {};
   window.pageTitles = {};
   let rendered = false;
-  setTimeout(loaded, 500);
 
   function wait(time) {
     return new Promise((res) => {
@@ -44,7 +62,7 @@ if (window.pages === undefined) {
     let socket;
     try {
       socket = io(`http://${window.location.hostname}:${window.location.port}`);
-    } catch(e) {
+    } catch (e) {
       let socketio = document.createElement("script");
       socketio.src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js";
       document.getElementsByTagName("head")[0].appendChild(socketio);
@@ -59,9 +77,9 @@ if (window.pages === undefined) {
       window.pageTitles[data.url] = data.title || false;
       i++;
       if (i === waiting) {
-        if (loading) $("#websiteRenderLoadingIcon").remove();
-        console.log("Website fully rendered!");
+        console.log("[WEBSITE RENDER] Website fully rendered!");
         rendered = true;
+        if (window.loading) $("#websiteRenderLoadingIcon").remove();
       }
     });
     // When getting all the pages
@@ -79,17 +97,18 @@ if (window.pages === undefined) {
   }
 
   // Website Render Button Function
-  let been = [window.location.pathname];
+  window.been = [window.location.pathname];
   function WebsiteRenderButton(path = "/", waitOnNotFullyRendered = true, addHistory = true) {
     // If the page isn't loaded and website-render isn't done yet
     if (!window.pages[path] && !waitOnNotFullyRendered) return window.location.href = `http://${window.location.hostname}:${window.location.port}${path}`;
     if (window.pages[path]) { // When the requested page is loaded
-      if (been.includes(path)) window.pages[path] = removeScripts(window.pages[path]);
-      $("body").html(window.pages[path]);
-      if (window.pages[path].includes("<title>") && window.pages[path].includes("</title>")) document.title = window.pages[path].split("<title>")[1].split("</title>")[0];
+      if (window.been.includes(path)) window.pages[path] = removeScripts(window.pages[path]);
+      let toSend = window.pages[path].split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</script>");
+      $("body").html(toSend);
+      if (toSend.includes("<title>") && toSend.includes("</title>")) document.title = toSend.split("<title>")[1].split("</title>")[0];
       if (window.pageTitles[path]) document.title = window.pageTitles[path];
       if (addHistory) history.pushState(path, `${document.title} `, `http://${window.location.hostname}:${window.location.port}${path}`);
-      been.push(path);
+      window.been.push(path);
     } else { // When the page isn't loaded yet
       // Loading indication
       let loading = document.createElement("div");
@@ -102,12 +121,12 @@ if (window.pages === undefined) {
           clearTimeout(timeout);
           clearInterval(int);
           if (!window.pages[path]) return window.location.href = `http://${window.location.hostname}:${window.location.port}${path}`;
-          if (been.includes(path)) window.pages[path] = removeScripts(window.pages[path]);
-          $("body").html(window.pages[path]);
-          if (window.pages[path].includes("<title>") && window.pages[path].includes("</title>")) document.title = window.pages[path].split("<title>")[1].split("</title>")[0];
+          let toSend = window.pages[path].split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</script>");
+          $("body").html(toSend);
+          if (toSend.includes("<title>") && toSend.includes("</title>")) document.title = toSend.split("<title>")[1].split("</title>")[0];
           if (window.pageTitles[path]) document.title = window.pageTitles[path];
           if (addHistory) history.pushState(path, `${document.title} `, `http://${window.location.hostname}:${window.location.port}${path}`);
-          been.push(path);
+          window.been.push(path);
         }
       }, 250);
       // Fail safe, for if something went wrong while rendering (Like an server error)
@@ -130,13 +149,13 @@ if (window.pages === undefined) {
         handle(s.split("<script>").slice(1).join("<script>"));
       }
       if (s.includes("</script>")) {
-        s = s.split("</script>")[s.split("</script>").length-1];
+        s = s.split("</script>")[s.split("</script>").length - 1];
         level--;
       }
       if (level <= 0) output += s;
     }
     handle(html);
-    output = output.split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</script>");
+    output = output.split("<forcescript>").join("<script>").split("</forcescript>").join("</script>");
     return output;
   }
 

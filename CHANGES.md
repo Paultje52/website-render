@@ -3,6 +3,7 @@ To see what changed each version, look here.
 
 # Menu
 * [V1.0](#v1.0)
+  * [V1.0.6](#V1.0.6)
   * [V1.0.5](#V1.0.5)
   * [V1.0.4](#V1.0.4)
   * [V1.0.3](#V1.0.3)
@@ -11,6 +12,10 @@ To see what changed each version, look here.
   * [V1.0.0](#v1.0.0)
 
 # V1.0
+## V1.0.6
+* Fixed support for safari (And other webbrowsers on ios devices)
+* Fixed a bug with the "FORCESCRIPT" tag
+* Made the loading of webpages a bit faster, every nano second counts!
 ## V1.0.5
 * Fixed a bug with the loading icon
 * Fixed a bug with the "FORCESCRIPT" tag

@@ -59,7 +59,7 @@ module.exports = exports = class WebsiteRender {
             file = `${process.cwd()}/views/${file}`;
             file = fs.readFileSync(file).toString("utf8");
             file = ejs.render(file, information);
-            file = file.split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</script>");
+            // file = file.split("<FORCESCRIPT>").join("<script>").split("</FORCESCRIPT>").join("</script>");
             res.send(file);
           }
           this.pages[i](req, res, next);
@@ -126,4 +126,4 @@ module.exports = exports = class WebsiteRender {
   }
 }
 
-exports.version = "v1.0.5";
+exports.version = "v1.0.6";

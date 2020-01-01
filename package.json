@@ -1,6 +1,6 @@
 {
   "name": "website-render",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Make your website faster for the user with minimal changes!",
   "main": "src\\index.js",
   "scripts": {

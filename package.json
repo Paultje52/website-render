@@ -1,10 +1,10 @@
 {
   "name": "website-render",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Make your website faster for the user with minimal changes!",
-  "main": "src\\index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd test && node index.js"
   },
   "repository": {
     "type": "git",
